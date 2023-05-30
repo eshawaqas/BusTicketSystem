@@ -5,12 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
-import android.os.AsyncTask;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -40,26 +38,27 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-
 public class SignUp extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
-    ImageView profilePictureImageView;
+
     private EditText Name, Email, RollNo, RouteNo, Password, ConfirmPassword;
+    private ImageView profilePictureImageView;
+    private Button button;
+    private Button uploadbtn;
 
     private Uri profilePictureUri;
-    Button button;
-    Button uploadbtn;
     private StorageReference storageReference;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://bus-pass-management-c51ef-default-rtdb.firebaseio.com/");
-    String name, email, rollNo, routeNo, password, confirmPassword;
+    private DatabaseReference databaseReference;
 
+    private String name, email, rollNo, routeNo, password, confirmPassword;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
         storageReference = FirebaseStorage.getInstance().getReference("Uploads");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
         Name = findViewById(R.id.nameEditText);
         Email = findViewById(R.id.emailEditText);
@@ -83,41 +82,30 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 boolean isValid = checks();
                 if (isValid) {
-                    databaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child(rollNo).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(rollNo))
-                            {
+                            if (snapshot.exists()) {
                                 Toast.makeText(SignUp.this, "User with this Roll No. already exists.", Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                                databaseReference.child("Users").child(rollNo).child("Name").setValue(name);
-                                databaseReference.child("Users").child(rollNo).child("Email").setValue(email);
-                                databaseReference.child("Users").child(rollNo).child("Route").setValue(routeNo);
-                                databaseReference.child("Users").child(rollNo).child("Password").setValue(password);
-                                databaseReference.child("Users").child(rollNo).child("Name").setValue(name);
-                                Toast.makeText(SignUp.this, "User registered successfully!", Toast.LENGTH_SHORT).show();
-                                finish();
+                            } else {
+                                saveUserDetails();
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            Toast.makeText(SignUp.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
                     // Validation failed, show error message
                     Toast.makeText(SignUp.this, "Validation unsuccessful", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
     }
 
-    private void openFileChooser()
-    {
+    private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -127,50 +115,56 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
-        {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             profilePictureUri = data.getData();
+            Picasso.with(this).load(profilePictureUri).into(profilePictureImageView);
         }
-        Picasso.with(this).load(profilePictureUri).into(profilePictureImageView);
-
     }
 
-    private String getFileExtension(Uri uri)
-    {
+    private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    private void uploadFile()
-    {
-        if (profilePictureImageView != null)
-        {
-            StorageReference fileReference = storageReference.child(System.currentTimeMillis()
-                    + "." + getFileExtension(profilePictureUri));
-            fileReference.putFile(profilePictureUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(SignUp.this, "Upload Successfully", Toast.LENGTH_SHORT).show();
-                    //Upload upload = new Upload(taskSnapshot.getDownloadUrl.toString());
-                }
-            })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(SignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-        else{
-            Toast.makeText(this, "No file selected.", Toast.LENGTH_SHORT).show();
-        }
+    private void saveUserDetails() {
+        StorageReference fileReference = storageReference.child(System.currentTimeMillis()
+                + "." + getFileExtension(profilePictureUri));
+        fileReference.putFile(profilePictureUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> downloadUriTask = taskSnapshot.getStorage().getDownloadUrl();
+                downloadUriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri downloadUri) {
+                        String downloadUrl = downloadUri.toString();
+                        Upload upload = new Upload(downloadUrl);
 
+                        // Save user details in the database
+                        User user = new User(name, email, rollNo, routeNo, password, downloadUrl);
+                        databaseReference.child(rollNo).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(SignUp.this, "User registered successfully!", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(SignUp.this, "Failed to register user. Please try again.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignUp.this, "Failed to upload profile picture. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private boolean checks()
-    {
+    private boolean checks() {
         // Retrieve user input values
         name = Name.getText().toString().trim();
         email = Email.getText().toString().trim();
@@ -224,8 +218,8 @@ public class SignUp extends AppCompatActivity {
         }
 
         int routeNumber = Integer.parseInt(routeNo);
-        if (routeNumber < 1 || routeNumber > 15) {
-            RouteNo.setError("Invalid route number.");
+        if (routeNumber < 1 || routeNumber > 999) {
+            RouteNo.setError("Invalid route number. Should be between 1 and 999");
             RouteNo.requestFocus();
             return false;
         }
@@ -236,8 +230,8 @@ public class SignUp extends AppCompatActivity {
             return false;
         }
 
-        if (password.length() < 8 || !password.matches("^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*$")) {
-            Password.setError("Password must be at least 8 characters with one capital letter, one numeric digit, and one special character");
+        if (password.length() < 6) {
+            Password.setError("Password should be at least 6 characters long");
             Password.requestFocus();
             return false;
         }
@@ -248,33 +242,17 @@ public class SignUp extends AppCompatActivity {
             return false;
         }
 
-        if (!password.equals(confirmPassword)) {
+        if (!confirmPassword.equals(password)) {
             ConfirmPassword.setError("Passwords do not match");
             ConfirmPassword.requestFocus();
             return false;
         }
 
         if (profilePictureUri == null) {
-            Toast.makeText(this, "Profile picture is required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please upload a profile picture", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        // All checks passed
         return true;
-    }
-
-
-
-
-
-
-    private void navigateToSplashScreen() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void NavigateToSplashscreen(View view) {
-        navigateToSplashScreen();
     }
 }

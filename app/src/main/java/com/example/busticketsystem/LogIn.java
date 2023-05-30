@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 
 
-
 public class LogIn extends AppCompatActivity {
 
     EditText Email, Password;
@@ -26,8 +25,6 @@ public class LogIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-
-
 
         Email = findViewById(R.id.editTextTextEmailAddress);
         Password = findViewById(R.id.editTextTextPassword);
