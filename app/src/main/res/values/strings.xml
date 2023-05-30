@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">BusTicketSystem</string>
+    <string name="todo_splash_logo">TODO</string>
+    <string name="splash_screen_hello">Hello!</string>
+    <string name="txt_splash_screen">If you need to get anywhere by mass transit, you need Moovit...it will open up a new world for you, even if you just travel domestically</string>
+    <string name="login">Login</string>
+    <string name="signup">Signup</string>
+    <string name="hello_world">Hello World</string>
+    <string name="movvit">MOVit</string>
+    <string name="todo_backbtn">TODO</string>
+    <string name="welcome_back">!</string>
+    <string name="welcome">Welcome Back</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="email_feild">Email</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="signuplink">Signup</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="accomodation">Accomodation</string>
+    <string name="roll_no">Roll No.</string>
+    <string name="route_no">Route No.</string>
+    <string name="name">Name</string>
+    <string name="hostellite">Hostellite</string>
+    <string name="day_scholar">Day Scholar</string>
+    <string name="john">John</string>
+    <string name="john_gmail_com">abc@xyz.com</string>
+    <string name="_11">11</string>
+    <string name="_20f_xxxx">20F-XXXX</string>
+    <string name="pw">*********</string>
+    <string name="take_picture">Add Picture</string>
+    <string name="scroll_view_content_description">scroll_view_content_description</string>
+</resources>

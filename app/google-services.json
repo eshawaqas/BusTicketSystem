@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "442892690679",
+    "project_id": "bus-pass-management-c51ef",
+    "storage_bucket": "bus-pass-management-c51ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442892690679:android:9610a76c8b4be7d4fa5ff2",
+        "android_client_info": {
+          "package_name": "com.example.busticketsystem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9cNxAblJccBtbleAA-GSdjr4IBqvB6nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
