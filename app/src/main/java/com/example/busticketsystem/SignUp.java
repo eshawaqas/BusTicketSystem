@@ -160,7 +160,6 @@ public class SignUp extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(SignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
                         }
                     });
         }
@@ -169,7 +168,7 @@ public class SignUp extends AppCompatActivity {
         }
 
     }
-    
+
     private boolean checks()
     {
         // Retrieve user input values
