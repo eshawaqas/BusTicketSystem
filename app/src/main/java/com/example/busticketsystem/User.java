@@ -7,6 +7,7 @@ public class User {
     private String routeNo;
     private String password;
     private String profilePictureUrl;
+    private boolean verified; // New field for verification status
 
     public User() {
         // Default constructor required for Firebase
@@ -19,6 +20,7 @@ public class User {
         this.routeNo = routeNo;
         this.password = password;
         this.profilePictureUrl = profilePictureUrl;
+        this.verified = false; // Set default verification status to false
     }
 
     public String getName() {
@@ -68,4 +70,13 @@ public class User {
     public void setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
     }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 }
+
