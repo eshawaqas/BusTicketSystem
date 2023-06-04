@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    tools:context=".VerificationOTP">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/otpreceiveimg"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="90dp"
+            app:srcCompat="@drawable/verify" />
+
+        <TextView
+            android:id="@+id/otpverifytxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/otp_verification"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/otpreceivetxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:gravity="center"
+            android:text="@string/please_enter_the_otp_sent_to_you"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/mobiletxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:gravity="center"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/otpinput1"
+                android:layout_width="40dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bgbox"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="LabelFor"></EditText>
+
+            <EditText
+                android:id="@+id/otpinput2"
+                android:layout_width="40dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bgbox"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:maxLength="1"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="LabelFor"></EditText>
+
+            <EditText
+                android:id="@+id/otpinput3"
+                android:layout_width="40dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bgbox"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:layout_marginStart="4dp"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="LabelFor"></EditText>
+
+            <EditText
+                android:id="@+id/otpinput4"
+                android:layout_width="40dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bgbox"
+                android:layout_marginStart="4dp"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="LabelFor"></EditText>
+
+            <EditText
+                android:id="@+id/otpinput5"
+                android:layout_width="40dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bgbox"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:layout_marginStart="4dp"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="LabelFor"></EditText>
+
+            <EditText
+                android:id="@+id/otpinput6"
+                android:layout_width="40dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bgbox"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:layout_marginStart="4dp"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="LabelFor"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/receiveotptxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/didn_t_receive_the_otp"></TextView>
+
+            <TextView
+                android:id="@+id/resendotptxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/resend_otp_again"
+                android:textColor="@android:color/holo_blue_light"
+                android:textStyle="bold"></TextView>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/submitbtnotp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="@drawable/round_btn"
+                android:text="Submit"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"></Button>
+
+            <ProgressBar
+                android:id="@+id/verifypregressbar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:visibility="gone">
+
+            </ProgressBar>
+
+        </FrameLayout>
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>

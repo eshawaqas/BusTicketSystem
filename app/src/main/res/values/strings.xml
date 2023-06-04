@@ -30,4 +30,12 @@
     <string name="pw">*********</string>
     <string name="take_picture">Add Picture</string>
     <string name="scroll_view_content_description">scroll_view_content_description</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="we_will_send_you_an_one_time_otp_on_this_given_mobile_number">We will send you an one time OTP on this given mobile number</string>
+    <string name="enter_mobile_number">Enter Mobile Number</string>
+    <string name="_3238567458">3238567458</string>
+    <string name="_92">+92</string>
+    <string name="please_enter_the_otp_sent_to_you">Please enter the OTP sent to you</string>
+    <string name="resend_otp_again">Resend OTP again</string>
+    <string name="didn_t_receive_the_otp">Didn\'t receive the OTP?</string>
 </resources>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EnterOTP">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/otpsendimg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="90dp"
+            app:srcCompat="@drawable/otp" />
+
+        <TextView
+            android:id="@+id/otpverifytxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/otp_verification"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/otpentertxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:gravity="center"
+            android:text="@string/we_will_send_you_an_one_time_otp_on_this_given_mobile_number"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/mobilenootptxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:gravity="center"
+            android:text="@string/enter_mobile_number"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/bgbox"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/mobilenotxt"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/_92"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/entermobileedttxt"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@null"
+                android:hint="@string/_3238567458"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:textStyle="bold">
+
+            </EditText>
+            
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/sendotpbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="@drawable/round_btn"
+                android:text="Get OTP"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold">
+
+            </Button>
+
+            <ProgressBar
+                android:id="@+id/sendotpprogressbar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:visibility="gone"></ProgressBar>
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+</ScrollView>

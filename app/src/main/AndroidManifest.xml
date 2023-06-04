@@ -18,6 +18,18 @@
         android:theme="@style/Theme.BusTicketSystem"
         tools:targetApi="31">
         <activity
+            android:name=".EnterOTP"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".VerificationOTP"
+            android:exported="false" />
+        <activity
             android:name=".UserInfo"
             android:exported="true">
             <intent-filter>
