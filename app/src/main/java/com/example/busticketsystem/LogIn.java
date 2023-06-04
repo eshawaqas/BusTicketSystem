@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.internal.Sleeper;
 
 import java.net.Authenticator;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class LogIn extends AppCompatActivity {
     DatabaseReference reference;
     boolean authenticationStatus = false;
 
+    String Path;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,32 +59,75 @@ public class LogIn extends AppCompatActivity {
         });
     }
 
-    private void authenticateLogin(String email,String password) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        authenticationStatus=false;
+    }
+
+    private void authenticateLogin(String email, String password) {
         HashMap<String,String>userCredentials= new HashMap<>();
         userCredentials.put("Email",email);
         userCredentials.put("Password",password);
 
-        HashMap<String,String>lol=new HashMap<>();
-        lol.put("lol","lol");
+//        Manually intent ko change kro yaha
+//        TO go to Admin##############################
+//        Intent intent=new Intent(this,AdminDashboard.class);
+//        startActivity(intent);
 
-        AuthenticatorAsync authenticatorAsync=new AuthenticatorAsync();
-        try {
-            boolean loll=authenticatorAsync.execute(lol).get();
-            if (loll){
-                Log.d("TAG","opop");
-            }
-
+//        TO go to User##############################
+        Intent intent1=new Intent(this,UserHomeScreen.class);
+        startActivity(intent1);
 
 
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
-//        if (credible("Admin",user)){
+
+//        HashMap<String,String>lol=new HashMap<>();
+//        lol.put("lol","lol");
+
+//        AuthenticatorAsync authenticatorAsync=new AuthenticatorAsync();
+//        try {
+//            Path="Admin";
+//            if (authenticatorAsync.execute(userCredentials).get()){
+//                Intent intent;
+//                intent=new Intent(this,AdminDashboard.class);
+//                startActivity(intent);
+//            }
+//            Path ="Users";
+//            if (authenticatorAsync.execute(userCredentials).get()){
+//                Intent intent;
+//                intent=new Intent(this,UserHomeScreen.class);
+//                startActivity(intent);
+//
+//            }else{
+//                Toast.makeText(this,"Invalid Password Email",Toast.LENGTH_SHORT).show();
+//            }
+//
+//
+//
+//
+//        } catch (ExecutionException e) {
+//            throw new RuntimeException(e);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        Log.d("TAG","Cred -- "+userCredentials.toString());
+
+
+//        For now manually acitvity run krlo
+//        Intent intent;
+//        intent=new Intent(this,UserHomeScreen.class);
+//        startActivity(intent);
+
+
+//        if (credible("Admin",userCredentials)){
 //            Log.d("TAG","Admin Equals");
-//        } else if (credible("Users",user)) {
+//            intent=new Intent(this,AdminDashboard.class);
+//            startActivity(intent);
+//        } else if (credible("Users",userCredentials)) {
+//            intent=new Intent(this,UserHomeScreen.class);
+//            startActivity(intent);
 //            Log.d("TAG","User Equals");
 //        }else{
 //            Toast.makeText(this,"Invalid Password Email",Toast.LENGTH_SHORT).show();
@@ -92,7 +137,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     public boolean credible(String Path, HashMap<String, String> user) {
-
+//        authenticationStatus=false;
         database=FirebaseDatabase.getInstance("https://bus-pass-management-c51ef-default-rtdb.firebaseio.com/");
         reference=database.getReference(Path);
         reference.addValueEventListener(new ValueEventListener() {
@@ -112,9 +157,10 @@ public class LogIn extends AppCompatActivity {
                             tempU.put("Email",temp.get("email"));
                             tempU.put("Password",temp.get("password"));
                             temp=tempU;
+                            Log.d("TAG","User Equality Performed");
                         }
 
-                        Log.d("TAG", String.valueOf(temp));
+//                        Log.d("TAG", String.valueOf(temp));
 
                         if(temp.equals(user)){
                             authenticationStatus =true;
@@ -140,8 +186,51 @@ public class LogIn extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(HashMap... hashMaps) {
-            Log.d("TAG", String.valueOf(hashMaps[0]));
-            return null;
+            HashMap<String,String>user=hashMaps[0];
+            database=FirebaseDatabase.getInstance("https://bus-pass-management-c51ef-default-rtdb.firebaseio.com/");
+            reference=database.getReference(Path);
+            Log.d("TAG",Path+"---------");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue()==null)
+                    {
+                        Log.d("TAG","No Data Retrieved from Firebase");
+                    }
+                    else
+                    {
+                        for(DataSnapshot ss:snapshot.getChildren()){
+                            HashMap<String,String>temp= (HashMap<String, String>) ss.getValue();
+
+                            if (Path=="Users"){
+                                HashMap<String,String>tempU=new HashMap<>();
+                                tempU.put("Email",temp.get("email"));
+                                tempU.put("Password",temp.get("password"));
+                                temp=tempU;
+                                Log.d("TAG","User Equality Performed");
+                            }
+
+//                        Log.d("TAG", String.valueOf(temp));
+
+                            if(temp.equals(user)){
+                                authenticationStatus =true;
+                                Log.d("TAG","lol");
+                                break;
+                            }else{
+                                authenticationStatus=false;
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+            return authenticationStatus;
         }
     }
 
