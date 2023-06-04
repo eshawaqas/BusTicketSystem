@@ -51,8 +51,8 @@ public class LogIn extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email=Email.getText().toString();
-                String pass=Password.getText().toString();
+                String email = Email.getText().toString();
+                String pass = Password.getText().toString();
 
                 authenticateLogin(email,pass);
             }
