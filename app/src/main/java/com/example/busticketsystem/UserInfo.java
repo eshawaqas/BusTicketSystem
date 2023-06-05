@@ -2,7 +2,6 @@ package com.example.busticketsystem;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,12 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
 
@@ -31,6 +25,7 @@ public class UserInfo extends AppCompatActivity {
     String[] userInfo=new String[4];
 
     Button deleteBtn, verifyBtn,updateBtn;
+    ImageView iv_qr;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -44,6 +39,7 @@ public class UserInfo extends AppCompatActivity {
         updateBtn=findViewById(R.id.updateBtn);
         userImage=findViewById(R.id.profilePictureImageView);
         routeNo=findViewById(R.id.routenoEditText);
+        //iv_qr=findViewById(R.id.iv_qr);
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,28 +82,40 @@ public class UserInfo extends AppCompatActivity {
     }
 
     private void verifyUser() {
-        try {
-            // Generate QR code based on the user's information
-            String userData = userInfo[0] + "|" + userInfo[1] + "|" + userInfo[2] + "|" + userInfo[3];
-            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            Bitmap qrCodeBitmap = barcodeEncoder.encodeBitmap(userData, BarcodeFormat.QR_CODE, 400, 400);
+//        String txt = "User";
+//        MultiFormatWriter writer = new MultiFormatWriter();
+//        try {
+//            BitMatrix matrix = writer.encode(txt, BarcodeFormat.QR_CODE, 400, 400);
+//            BarcodeEncoder encoder = new BarcodeEncoder();
+//            Bitmap bitmap = encoder.createBitmap(matrix);
+//            iv_qr.setImageBitmap(bitmap);
+//
+//        } catch (WriterException e) {
+//            throw new RuntimeException(e);
+//        }
 
-            // Pass the QR code bitmap to the VerifiedAccountFragment
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("qrCode", qrCodeBitmap);
-            VerifiedAccountFragment verifiedAccountFragment = new VerifiedAccountFragment();
-            verifiedAccountFragment.setArguments(bundle);
-
-            // Replace the current fragment with VerifiedAccountFragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, verifiedAccountFragment);
-            fragmentTransaction.commit();
-
-            Toast.makeText(this, "User Verified", Toast.LENGTH_SHORT).show();
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            // Generate QR code based on the user's information
+//            String userData = userInfo[0] + "|" + userInfo[1] + "|" + userInfo[2] + "|" + userInfo[3];
+//            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+//            Bitmap qrCodeBitmap = barcodeEncoder.encodeBitmap(userData, BarcodeFormat.QR_CODE, 400, 400);
+//
+//            // Pass the QR code bitmap to the VerifiedAccountFragment
+//            Bundle bundle = new Bundle();
+//            bundle.putParcelable("qrCode", qrCodeBitmap);
+//            VerifiedAccountFragment verifiedAccountFragment = new VerifiedAccountFragment();
+//            verifiedAccountFragment.setArguments(bundle);
+//
+//            // Replace the current fragment with VerifiedAccountFragment
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.fragment_container, verifiedAccountFragment);
+//            fragmentTransaction.commit();
+//
+//            Toast.makeText(this, "User Verified", Toast.LENGTH_SHORT).show();
+//        } catch (WriterException e) {
+//            e.printStackTrace();
+//        }
 //        Toast.makeText(this,"User Verified",Toast.LENGTH_SHORT).show();
     }
 
