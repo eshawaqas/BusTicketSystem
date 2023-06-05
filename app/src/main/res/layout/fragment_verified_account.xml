@@ -19,7 +19,7 @@
     </TextView>
 
     <ImageView
-        android:id="@+id/qrCodeImageView"
+        android:id="@+id/iv_qr"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center_horizontal"

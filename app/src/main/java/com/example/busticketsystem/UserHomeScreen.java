@@ -57,12 +57,12 @@ public class UserHomeScreen extends AppCompatActivity {
     private boolean noReceiptImageInStorage() {
         // Implement your logic to check if there is no receipt image in the database storage
         // Return true if there is no receipt image, false otherwise
-        return true; // Placeholder, replace with your implementation
+        return false; // Placeholder, replace with your implementation
     }
 
     private boolean verifiedAccount() {
         // Implement your logic to check if the verification is in progress
         // Return true if the verification is in progress, false otherwise
-        return false; // Placeholder, replace with your implementation
+        return true; // Placeholder, replace with your implementation
     }
 }
