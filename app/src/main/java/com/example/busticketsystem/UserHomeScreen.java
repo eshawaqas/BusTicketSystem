@@ -5,11 +5,16 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
 public class UserHomeScreen extends AppCompatActivity {
@@ -42,27 +47,26 @@ public class UserHomeScreen extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        // Check conditions and show the appropriate fragment
-        if (noReceiptImageInStorage()) {
-            fragmentTransaction.replace(R.id.fragment_container, new NoReceiptFragment());
-        } else if (verifiedAccount()) {
-            fragmentTransaction.replace(R.id.fragment_container, new VerifiedAccountFragment());
-        } else {
-            fragmentTransaction.replace(R.id.fragment_container, new VerificationInProgressFragment());
-        }
+        String userId = "19F-0987"; // Replace with the actual user ID
 
-        fragmentTransaction.commit();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        databaseReference.child("Users").child(userId).child("receipts").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    fragmentTransaction.replace(R.id.fragment_container, new VerifiedAccountFragment());
+                } else {
+                    fragmentTransaction.replace(R.id.fragment_container, new NoReceiptFragment());
+                }
+                fragmentTransaction.commit();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle the error condition
+            }
+        });
     }
 
-    private boolean noReceiptImageInStorage() {
-        // Implement your logic to check if there is no receipt image in the database storage
-        // Return true if there is no receipt image, false otherwise
-        return false; // Placeholder, replace with your implementation
-    }
-
-    private boolean verifiedAccount() {
-        // Implement your logic to check if the verification is in progress
-        // Return true if the verification is in progress, false otherwise
-        return true; // Placeholder, replace with your implementation
-    }
 }

@@ -89,6 +89,7 @@ public class UserInfo extends AppCompatActivity {
 
     private void verifyUser() {
 
+
         // Get the user's roll number
         //String rollNo = userInfo[0];
         String rollNo = "19F-2314";
@@ -96,6 +97,7 @@ public class UserInfo extends AppCompatActivity {
         // Get a reference to the Firebase database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
+        // isme condition dalni hai ke agar image pari huwi hai receipt ko tb ye kaam ho else wo boldey image doesnt exist
         // Update the status of the user to "verified"
         databaseReference.child(rollNo).child("verified").setValue(true)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
