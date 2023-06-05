@@ -13,10 +13,12 @@ import androidx.fragment.app.Fragment;
 @SuppressLint("MissingInflatedId")
 public class VerifiedAccountFragment extends Fragment {
 
+    ImageView qrCodeImageView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_verified_account, container, false);
-        ImageView qrCodeImageView = view.findViewById(R.id.qrCodeImageView);
+        qrCodeImageView = view.findViewById(R.id.qrCodeImageView);
 
         // Retrieve the QR code bitmap from the arguments
         Bundle bundle = getArguments();
@@ -29,5 +31,4 @@ public class VerifiedAccountFragment extends Fragment {
 
         return view;
     }
-
 }

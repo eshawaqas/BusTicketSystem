@@ -45,10 +45,10 @@ public class UserHomeScreen extends AppCompatActivity {
         // Check conditions and show the appropriate fragment
         if (noReceiptImageInStorage()) {
             fragmentTransaction.replace(R.id.fragment_container, new NoReceiptFragment());
-        } else if (verificationInProgress()) {
-            fragmentTransaction.replace(R.id.fragment_container, new VerificationInProgressFragment());
-        } else {
+        } else if (verifiedAccount()) {
             fragmentTransaction.replace(R.id.fragment_container, new VerifiedAccountFragment());
+        } else {
+            fragmentTransaction.replace(R.id.fragment_container, new VerificationInProgressFragment());
         }
 
         fragmentTransaction.commit();
@@ -57,10 +57,10 @@ public class UserHomeScreen extends AppCompatActivity {
     private boolean noReceiptImageInStorage() {
         // Implement your logic to check if there is no receipt image in the database storage
         // Return true if there is no receipt image, false otherwise
-        return false; // Placeholder, replace with your implementation
+        return true; // Placeholder, replace with your implementation
     }
 
-    private boolean verificationInProgress() {
+    private boolean verifiedAccount() {
         // Implement your logic to check if the verification is in progress
         // Return true if the verification is in progress, false otherwise
         return false; // Placeholder, replace with your implementation
