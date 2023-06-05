@@ -1,10 +1,16 @@
 package com.example.busticketsystem;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.StorageReference;
 
 public class UserHomeScreen extends AppCompatActivity {
 
@@ -12,6 +18,14 @@ public class UserHomeScreen extends AppCompatActivity {
     private VerificationInProgressFragment verificationInProgressFragment;
     private VerifiedAccountFragment verifiedAccountFragment;
 
+    private static final int PICK_IMAGE_REQUEST = 1;
+
+    private ImageView uploadImageView;
+    private Bitmap selectedImageBitmap;
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +33,10 @@ public class UserHomeScreen extends AppCompatActivity {
         noReceiptFragment = new NoReceiptFragment();
         verificationInProgressFragment = new VerificationInProgressFragment();
         verifiedAccountFragment = new VerifiedAccountFragment();
+
         displayFragment();
     }
+
 
     private void displayFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -41,7 +57,7 @@ public class UserHomeScreen extends AppCompatActivity {
     private boolean noReceiptImageInStorage() {
         // Implement your logic to check if there is no receipt image in the database storage
         // Return true if there is no receipt image, false otherwise
-        return true; // Placeholder, replace with your implementation
+        return false; // Placeholder, replace with your implementation
     }
 
     private boolean verificationInProgress() {

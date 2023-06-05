@@ -1,11 +1,9 @@
 package com.example.busticketsystem;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +12,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
+
 
 public class UserInfo extends AppCompatActivity {
 
@@ -73,20 +79,44 @@ public class UserInfo extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+
     private void updateRoute() {
 
         Toast.makeText(this,"Route Updated",Toast.LENGTH_SHORT).show();
     }
 
     private void verifyUser() {
+        try {
+            // Generate QR code based on the user's information
+            String userData = userInfo[0] + "|" + userInfo[1] + "|" + userInfo[2] + "|" + userInfo[3];
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap qrCodeBitmap = barcodeEncoder.encodeBitmap(userData, BarcodeFormat.QR_CODE, 400, 400);
 
-        Toast.makeText(this,"User Verified",Toast.LENGTH_SHORT).show();
+            // Pass the QR code bitmap to the VerifiedAccountFragment
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("qrCode", qrCodeBitmap);
+            VerifiedAccountFragment verifiedAccountFragment = new VerifiedAccountFragment();
+            verifiedAccountFragment.setArguments(bundle);
+
+            // Replace the current fragment with VerifiedAccountFragment
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, verifiedAccountFragment);
+            fragmentTransaction.commit();
+
+            Toast.makeText(this, "User Verified", Toast.LENGTH_SHORT).show();
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+//        Toast.makeText(this,"User Verified",Toast.LENGTH_SHORT).show();
     }
 
     private void deleteUser() {
 
         Toast.makeText(this,"User Deleted",Toast.LENGTH_SHORT).show();
     }
+
+
 
 
 }
