@@ -76,8 +76,8 @@ public class LogIn extends AppCompatActivity {
 //        startActivity(intent);
 
 //        TO go to User##############################
-        Intent intent1=new Intent(this,UserHomeScreen.class);
-        startActivity(intent1);
+//        Intent intent1=new Intent(this,UserHomeScreen.class);
+//        startActivity(intent1);
 
 
 
@@ -133,6 +133,54 @@ public class LogIn extends AppCompatActivity {
 //            Toast.makeText(this,"Invalid Password Email",Toast.LENGTH_SHORT).show();
 //            Log.d("TAG","None Equals");
 //        }
+        verify(userCredentials);
+
+    }
+
+    private void verify(HashMap<String, String> userCredentials) {
+        Log.d("TAG",userCredentials.toString()+"--Cred");
+        String[] ad={"admin1@gmai.com","admin2@gmail.com"};
+        String[] adPas={"Admin@1","Admin@2"};
+        String[] us={"ammaraali@gmail.com","mashoodali@hotmail.com","kiwikent21@gmail.com","ali111zahid@gmail.com","amna@gmail.com","sam7676@gmail.com","zammadd@yahoo.com","ahmed312@hotmail.com","mahnoortariq@yahoo.com","zaino67@gmail.com"};
+        String[] usPas={"Dream@big1","M@shood1","Kiwi543@","Ali987$","Amna3456@","Sam343@","holykingW34$","Blackman45@","Thebeatles2@","Z1no123*"};
+        String temp=userCredentials.get("Email").toString();
+        String temp1=userCredentials.get("Password").toString();
+        boolean check=false;
+        Log.d("TAG", String.valueOf(ad.length)+" - "+us.length);
+
+
+        for (int i=0;i<ad.length;i++){
+//            Log.d("TAG","lol");
+            Log.d("TAG",ad[i]+" () "+adPas[i]);
+
+
+            Log.d("TAG",temp+" = "+temp1);
+            if (ad[i].equals(temp) && adPas[i].equals(temp1)){
+                Log.d("TAG","Admin PAss");
+                check=true;
+                Intent intent=new Intent(LogIn.this,AdminDashboard.class);
+                intent.putExtra("Email",temp);
+                intent.putExtra("Password",temp1);
+                startActivity(intent);
+                break;
+            }
+        }
+
+        for (int i=0;i<us.length;i++){
+            if (us[i].equals(temp) && usPas[i].equals(temp1)){
+                Log.d("TAG","User PAss");
+                check=true;
+                Intent intent=new Intent(LogIn.this,UserHomeScreen.class);
+                intent.putExtra("Email",temp);
+                intent.putExtra("Password",temp1);
+                startActivity(intent);
+                break;
+            }
+        }
+
+        if (check==false){
+                Toast.makeText(this,"Invalid Password Email",Toast.LENGTH_SHORT).show();
+        }
 
     }
 

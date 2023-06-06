@@ -1,6 +1,7 @@
 package com.example.busticketsystem;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ public class UserHomeScreen extends AppCompatActivity {
     private Bitmap selectedImageBitmap;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
+    String email,password;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -39,6 +41,10 @@ public class UserHomeScreen extends AppCompatActivity {
         verificationInProgressFragment = new VerificationInProgressFragment();
         verifiedAccountFragment = new VerifiedAccountFragment();
 
+        Intent intent=getIntent();
+        email=intent.getStringExtra("Email");
+        password=intent.getStringExtra("Password");
+
         displayFragment();
     }
 
@@ -48,6 +54,7 @@ public class UserHomeScreen extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         String userId = "19F-0987"; // Replace with the actual user ID
+
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
