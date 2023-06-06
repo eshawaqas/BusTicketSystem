@@ -3,6 +3,7 @@ package com.example.busticketsystem;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,8 @@ public class UserInfo extends AppCompatActivity {
 
     Button deleteBtn, verifyBtn,updateBtn;
     ImageView iv_qr;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -82,6 +85,11 @@ public class UserInfo extends AppCompatActivity {
 
 
     private void updateRoute() {
+        String newRoute=routeNo.getText().toString();
+        database=FirebaseDatabase.getInstance("https://bus-pass-management-c51ef-default-rtdb.firebaseio.com/");
+        reference=database.getReference("Users");
+
+        reference.child(userInfo[0]).child("rollNo").setValue(newRoute);
 
         Toast.makeText(this,"Route Updated",Toast.LENGTH_SHORT).show();
     }
@@ -92,7 +100,7 @@ public class UserInfo extends AppCompatActivity {
 
         // Get the user's roll number
         //String rollNo = userInfo[0];
-        String rollNo = "19F-2314";
+        String rollNo = "20F-0322";
 
         // Get a reference to the Firebase database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -114,11 +122,18 @@ public class UserInfo extends AppCompatActivity {
     }
 
     private void deleteUser() {
+        database=FirebaseDatabase.getInstance("https://bus-pass-management-c51ef-default-rtdb.firebaseio.com/");
+        reference=database.getReference("Users");
+        reference.child(userInfo[0]).removeValue();
 
         Toast.makeText(this,"User Deleted",Toast.LENGTH_SHORT).show();
+
+        Intent intent=new Intent(UserInfo.this,AdminDashboard.class);
+        startActivity(intent);
     }
 
 
+    public void updateRoute(View view) {
 
-
+    }
 }

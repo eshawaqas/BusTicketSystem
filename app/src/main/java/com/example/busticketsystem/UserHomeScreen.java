@@ -30,20 +30,21 @@ public class UserHomeScreen extends AppCompatActivity {
     private Bitmap selectedImageBitmap;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
-    String email,password;
+    String email,password,roll;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home_screen);
-        noReceiptFragment = new NoReceiptFragment();
+//        noReceiptFragment = new NoReceiptFragment();
         verificationInProgressFragment = new VerificationInProgressFragment();
         verifiedAccountFragment = new VerifiedAccountFragment();
 
         Intent intent=getIntent();
         email=intent.getStringExtra("Email");
         password=intent.getStringExtra("Password");
+        roll=intent.getStringExtra("Rollno");
 
         displayFragment();
     }
@@ -53,10 +54,13 @@ public class UserHomeScreen extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        String userId = "19F-0987"; // Replace with the actual user ID
+        String userId = roll; // Replace with the actual user ID
+
 
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
 
         databaseReference.child("Users").child(userId).child("receipts").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -64,7 +68,7 @@ public class UserHomeScreen extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     fragmentTransaction.replace(R.id.fragment_container, new VerifiedAccountFragment());
                 } else {
-                    fragmentTransaction.replace(R.id.fragment_container, new NoReceiptFragment());
+                    fragmentTransaction.replace(R.id.fragment_container, new NoReceiptFragment(roll));
                 }
                 fragmentTransaction.commit();
             }

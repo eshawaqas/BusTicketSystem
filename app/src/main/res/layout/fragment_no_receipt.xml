@@ -74,7 +74,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile1" />
+            app:srcCompat="@drawable/profile1"
+            tools:ignore="MissingClass" />
 
         <TextView
             android:id="@+id/homescreennametxt"

@@ -143,6 +143,7 @@ public class LogIn extends AppCompatActivity {
         String[] adPas={"Admin@1","Admin@2"};
         String[] us={"ammaraali@gmail.com","mashoodali@hotmail.com","kiwikent21@gmail.com","ali111zahid@gmail.com","amna@gmail.com","sam7676@gmail.com","zammadd@yahoo.com","ahmed312@hotmail.com","mahnoortariq@yahoo.com","zaino67@gmail.com"};
         String[] usPas={"Dream@big1","M@shood1","Kiwi543@","Ali987$","Amna3456@","Sam343@","holykingW34$","Blackman45@","Thebeatles2@","Z1no123*"};
+        String[] roll={"19F-0987","19F-2314","20F-0322","20F-0567","20F-0987","20F-8967","21F-0322","22F-4566","22F-5674"};
         String temp=userCredentials.get("Email").toString();
         String temp1=userCredentials.get("Password").toString();
         boolean check=false;
@@ -173,6 +174,7 @@ public class LogIn extends AppCompatActivity {
                 Intent intent=new Intent(LogIn.this,UserHomeScreen.class);
                 intent.putExtra("Email",temp);
                 intent.putExtra("Password",temp1);
+                intent.putExtra("Rollno",roll[i]);
                 startActivity(intent);
                 break;
             }

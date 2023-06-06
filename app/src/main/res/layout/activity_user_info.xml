@@ -104,7 +104,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toEndOf="@+id/routenoEditText"
-        app:layout_constraintTop_toBottomOf="@+id/routenotxt" />
+        app:layout_constraintTop_toBottomOf="@+id/routenotxt"
+        android:onClick="updateRoute"/>
 
     <Button
         android:id="@+id/verifyBtn"

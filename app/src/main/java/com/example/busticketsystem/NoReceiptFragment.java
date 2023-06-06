@@ -42,7 +42,10 @@ public class NoReceiptFragment extends Fragment {
 
     Button receiptImage;
 
-    public NoReceiptFragment() {
+    String roll;
+    public NoReceiptFragment(String roll) {
+        this.roll=roll;
+
         // Required empty public constructor
     }
 
@@ -131,7 +134,7 @@ public class NoReceiptFragment extends Fragment {
     private void fetchUserData() {
 //        if (currentUser != null) {
         //String userId = currentUser.getUid();
-        String userId = "19F-0987";
+        String userId = roll;
 
         // Retrieve user data from the database based on the user's ID
         databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
