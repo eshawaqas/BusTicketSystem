@@ -26,12 +26,13 @@ public class VerifiedAccountFragment extends Fragment {
 
     ImageView iv_qr;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_verified_account, container, false);
         iv_qr = view.findViewById(R.id.iv_qr);
 
-        String rollNo = "19F-2314"; // Replace with the user's roll number
+        String rollNo = "19F-0987"; // Replace with the user's roll number
         fetchUserData(rollNo);
 
         return view;
